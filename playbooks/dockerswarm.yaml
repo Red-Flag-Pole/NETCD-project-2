@@ -1,0 +1,40 @@
+---
+  - name: Init Swarm Master
+    hosts: masters
+    become: yes
+    #gather_facts: False
+    tasks:
+      - name: Init a new swarm
+        docker_swarm:
+          state: present
+
+      #- name: Set node role
+      #  docker_node:
+      #    hostname: netcdtestingip1
+      #   role: manager
+
+      - name: Get Worker Token
+        docker_swarm:
+          state: inspect
+        register: swarm_info
+
+      - name: Show Worker Token
+        debug: var=swarm_info.swarm_facts.JoinTokens.Worker
+
+      - name: Show Master Token
+        debug: var=swarm_info.swarm_facts.JoinTokens.Manager
+
+  - name: Join Swarm Cluster
+    hosts: workers
+    become: yes    
+    #gather_facts: False
+    vars:
+      token: "{{ hostvars[groups['masters'][0]][swarm_info][swarm_facts][JoinTokens][Worker] }}"
+    tasks:
+      - name: Join Swarm Cluster as a Worker
+        docker_swarm:
+          state: join
+          advertise_addr: 10.0.2.5
+          join-token: "{{ token }}"
+
+

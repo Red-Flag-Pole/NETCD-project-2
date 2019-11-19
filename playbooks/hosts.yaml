@@ -1,0 +1,18 @@
+all:
+  hosts:
+    netcdtestingip1.southeastasia.cloudapp.azure.com:
+      ansible_connection: ssh 
+      ansible_ssh_user: netcd 
+      ansible_ssh_pass: netcd123456
+    netcdtestingip2.southeastasia.cloudapp.azure.com:
+      ansible_connection: ssh 
+      ansible_ssh_user: netcd 
+      ansible_ssh_pass: netcd123456
+  children:
+    masters:
+      hosts:
+        netcdtestingip1.southeastasia.cloudapp.azure.com:
+        # netcdtestingip1.southeastasia.cloudapp.azure.com:
+    workers:
+      hosts:
+        netcdtestingip2.southeastasia.cloudapp.azure.com:
