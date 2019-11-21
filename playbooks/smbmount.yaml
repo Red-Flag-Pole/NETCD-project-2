@@ -1,0 +1,11 @@
+---
+  - hosts: all
+    become: true
+    tasks:
+    - name : Mount Azure files share's
+      mount:
+        fstype: cifs
+        src: "//netcdstorage.file.core.windows.net/nextcloud"
+        path: /srv/storage
+        opts: vers=3.0,username=netcdstorage,password=MPhL8iDevyQBK2H+OZCzsKkcIaoLSkbXVbnQyarm37O5bVoBCpOQoOraJfFCQt+SfqRQx0Uvw1Ce/Odu76h+3g==,dir_mode=0777,file_mode=0777,serverino
+        state: mounted

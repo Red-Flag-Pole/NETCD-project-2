@@ -29,7 +29,7 @@
     become: yes    
     #gather_facts: False
     vars:
-      token: "{{ hostvars[groups['masters'][0]][swarm_info][swarm_facts][JoinTokens][Worker] }}"
+      token: "{{ hostvars[groups['masters'][0]].swarm_info.swarm_facts.JoinTokens.Manager }}"
     tasks:
       - name: Join Swarm Cluster as a Worker
         docker_swarm:
