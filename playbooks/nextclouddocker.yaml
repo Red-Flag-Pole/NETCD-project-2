@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Extract netcdcloud-docker.tar.gz archive
+      unarchive:
+        src: netcdcloud-docker.tar.gz
+        dest: /home/netcd/netcdcloud-docker
+       
+    - name: Tear down existing services
+      docker_service:
+      # docker_compose: # Version 2.8 and up
+        # note: project_src is a directory
+        project_src: /home/netcd/netcdcloud-docker/docker-compose.yml
+        state: absent
+
+    - name: Create and start services
+      docker_service:
+      # docker_compose: # Version 2.8 and up
+        build: yes
+        project_src: /home/netcd/netcdcloud-docker/docker-compose.yml
+      register: output
+      
+
+    - debug:
+        var: output

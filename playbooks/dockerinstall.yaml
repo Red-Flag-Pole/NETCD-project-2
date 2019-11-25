@@ -1,11 +1,6 @@
 ---
 - hosts: all
   become: true
-  vars:
-    create_containers: 2
-    default_container_name: docker
-    default_container_image: ubuntu
-    default_container_command: echo "HELLO WORLD"
 
   tasks:
     - name: Install aptitude using apt
@@ -30,22 +25,12 @@
 
     - name: Install Docker Module for Python
       pip:
-        name: docker-compose
-       # executable: pip3
+        name: docker-compose>1.19.0
+        # executable: pip3
 
-    # Pull image specified by variable default_image from the Docker Hub
-    - name: Pull default Docker image
-      docker_image:
-        name: "{{ default_container_image }}"
-        # source: pull, only in version 2.8 and above
-        # source: pull
-        pull: yes
-
-    # Creates the number of containers defined by the variable create_containers, using default values
-    - name: Create default containers
-      docker_container:
-        name: "{{ default_container_name }}{{ item }}"
-        image: "{{ default_container_image }}"
-        command: "{{ default_container_command }}"
-        state: present
-      with_sequence: count={{ create_containers }}
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+        # executable: pip3
+        version: "4.1.0"
+        state: forcereinstall

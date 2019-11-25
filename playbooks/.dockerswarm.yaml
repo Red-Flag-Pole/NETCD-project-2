@@ -1,4 +1,5 @@
 ---
+  # UNUSED: NOT IMPLEMENTED BUT PLAYBOOK WILL WORK
   - name: Init Swarm Master
     hosts: masters
     become: yes
@@ -35,6 +36,8 @@
         docker_swarm:
           state: join
           advertise_addr: 10.0.2.5
-          join-token: "{{ token }}"
+          join_token: "{{ token }}"
+          remote_addrs: ["{{ hostvars[groups['masters'][0]].ansible_default_ipv4.address }}"]
+
 
 

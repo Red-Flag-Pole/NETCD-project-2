@@ -2,13 +2,10 @@ version: '3'
 
 services:
   db:
-    image: mariadb
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    image: postgres:alpine
     restart: always
     volumes:
-      - db:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=P@ssw0rd
+      - db:/var/lib/postgresql/data
     env_file:
       - db.env
 
@@ -18,10 +15,11 @@ services:
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - VIRTUAL_HOST=
+      - VIRTUAL_HOST=netcdcloud.ruibin.me
       - LETSENCRYPT_HOST=netcdcloud.ruibin.me
       - LETSENCRYPT_EMAIL=s10169526@connect.np.edu.sg
-      - MYSQL_HOST=db
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=nextcloud
     env_file:
       - db.env
     depends_on:
@@ -31,7 +29,7 @@ services:
       - default
 
   proxy:
-    image: jwilder/nginx-proxy:alpine
+    build: ./proxy
     restart: always
     ports:
       - 80:80
@@ -43,7 +41,6 @@ services:
       - vhost.d:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /home/netcd/apache/proxy/uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf
     networks:
       - proxy-tier
 
@@ -66,7 +63,6 @@ volumes:
   certs:
   vhost.d:
   html:
-  proxy:
 
 networks:
   proxy-tier:
