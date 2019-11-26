@@ -9,9 +9,11 @@
         state: directory
 
     - name: Extract netcdcloud-docker.tar.gz archive
+      # Make sure resources in tar are under the netcdcloud-docker
+      # directory
       unarchive:
         src: netcdcloud-docker.tar
-        dest: /home/netcd/netcdcloud-docker
+        dest: /home/netcd/
        
     - name: Tear down existing services
       docker_service:
