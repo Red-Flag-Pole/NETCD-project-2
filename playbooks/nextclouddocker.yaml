@@ -3,9 +3,15 @@
   become: true
 
   tasks:
+    - name: Create docker compose directory
+      file:
+        path: /home/netcd/netcdcloud-docker
+        state: directory
+
+  tasks:
     - name: Extract netcdcloud-docker.tar.gz archive
       unarchive:
-        src: netcdcloud-docker.tar.gz
+        src: netcdcloud-docker.tar
         dest: /home/netcd/netcdcloud-docker
        
     - name: Tear down existing services
