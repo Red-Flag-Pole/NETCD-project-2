@@ -167,7 +167,7 @@ resource "azurerm_virtual_machine" "DockerNode1" {
         disable_password_authentication = true
         ssh_keys {
             path     = "/home/netcd/.ssh/authorized_keys"
-            key_data = "ssh-rsa ***REMOVED***cbBbH0ftJ9TM***REMOVED******REMOVED******REMOVED******REMOVED***pu8lkLA3Bife0CrG9yXVtde6ttCHCspE/t7SIw== ***REMOVED***"
+            key_data = "ssh-rsa ***REMOVED*** ***REMOVED***"
         }
     }
 
@@ -212,7 +212,7 @@ resource "azurerm_virtual_machine" "DockerNode1" {
 #         disable_password_authentication = true
 #         ssh_keys {
 #             path     = "/home/netcd/.ssh/authorized_keys"
-#             key_data = "ssh-rsa ***REMOVED***cbBbH0ftJ9TM***REMOVED******REMOVED******REMOVED******REMOVED***pu8lkLA3Bife0CrG9yXVtde6ttCHCspE/t7SIw== ***REMOVED***"
+#             key_data = "ssh-rsa ***REMOVED*** ***REMOVED***"
 #         }
 #     }
 
